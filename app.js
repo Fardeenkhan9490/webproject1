@@ -151,10 +151,22 @@ function initializeEventListeners() {
  * Hides the order success modal and returns to the home page.
  */
 function closeOrderModal() {
-  document.getElementById('orderModal').classList.add('hidden');
-  currentSupplier = null; // Reset context
-  currentCategory = null; // Reset context
-  showPage('home');
+  // First hide the modal
+  const modal = document.getElementById('orderModal');
+  modal.classList.add('hidden');
+  
+  // Reset context
+  currentSupplier = null;
+  currentCategory = null;
+  
+  // Small delay to ensure modal is hidden before showing home page
+  setTimeout(() => {
+    // Show home page
+    showPage('home');
+    
+    // Force re-render of home page content
+    renderHomePage();
+  }, 100);
 }
 
 /**
@@ -705,7 +717,17 @@ function placeOrder(event) {
   if (orderIdDisplay) {
     orderIdDisplay.textContent = orderId;
   }
-  document.getElementById('orderModal').classList.remove('hidden');
+  const modal = document.getElementById('orderModal');
+  modal.classList.remove('hidden');
+  
+  // Add event listener to the modal's close button
+  const closeBtn = document.getElementById('closeModalBtn');
+  if (closeBtn) {
+    // Remove any existing event listeners
+    closeBtn.replaceWith(closeBtn.cloneNode(true));
+    // Add new event listener
+    document.getElementById('closeModalBtn').addEventListener('click', closeOrderModal);
+  }
 }
 
 /**
