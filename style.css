@@ -155,7 +155,7 @@
   --color-info: rgba(167, 169, 169, 1);
   --color-focus-ring: rgba(50, 184, 198, 0.4);
   --color-btn-primary-text: rgba(19, 52, 59, 1);
-  --color-card-border: rgba(119, 124, 124, 0.15);
+  --color-card-border: rgba(119, 124, 124, 0);
   --color-card-border-inner: rgba(119, 124, 124, 0.15);
   --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1),
     inset 0 -1px 0 rgba(0, 0, 0, 0.15);
@@ -353,8 +353,7 @@ pre code {
 }
 
 .btn--full-width {
-  width: 100%;
-}.btn:disabled {
+  width: 100%;}.btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -1110,13 +1109,29 @@ select.form-control {
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
 }
 
 .modal-content {
-  background: var(--color-surface); border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
   max-width: 500px;
   width: 90%;
   margin: var(--space-20);
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
 }
 
 .modal-header {
@@ -1125,14 +1140,47 @@ select.form-control {
   text-align: center;
 }
 
+.modal-header h3 {
+  color: var(--village-green);
+  margin: 0;
+  font-size: var(--font-size-2xl);
+}
+
 .modal-body {
   padding: var(--space-24);
   text-align: center;
 }
 
+.modal-body p {
+  margin-bottom: var(--space-16);
+  color: var(--color-text);
+}
+
+.modal-body p:last-child {
+  margin-bottom: 0;
+  font-weight: var(--font-weight-medium);
+}
+
 .modal-footer {
-  padding: var(--space-24);border-top: 1px solid var(--color-border);
+  padding: var(--space-24);
+  border-top: 1px solid var(--color-border);
   text-align: center;
+}
+
+#continueShoppingBtn {
+  min-width: 200px;
+  padding: var(--space-12) var(--space-24);
+  font-size: var(--font-size-lg);
+  background: var(--village-green);
+  color: white;
+  border: none;
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#continueShoppingBtn:hover {
+  background: #388E3C;
 }
 
 /* Utility Classes */
